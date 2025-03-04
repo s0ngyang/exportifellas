@@ -14,6 +14,40 @@ As many users have noted, there is no way to export/archive/backup playlists fro
 
 **No data will be saved - the entire application runs in the browser.**
 
+## Development
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+In the project directory, first run `yarn install` to set up dependencies, then you can run:
+
+**`yarn start`**
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+**`yarn test`**
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+**`yarn build`**
+
+Builds the app for production to the `build` folder.
+
+### Stack
+
+In addition to [Create React App](https://github.com/facebook/create-react-app), the application is built using the following tools/libraries:
+
+- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
+- [Bootstrap 5](https://getbootstrap.com/) - styling and UI components
+- [Font Awesome 6](https://fontawesome.com/) - vector icon set and toolkit
+- [react-i18next](https://react.i18next.com/) - internationalization framework
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - light-weight solution for testing React DOM nodes
+- [MSW](https://mswjs.io/) - network-level request mocking (more of my own thoughts [here](https://watsonbox.github.io/posts/2020/11/30/discovering-msw.html))
+
 ## Features
 
 - ⚙️ Optional inclusion of album, artist and audio features data in export files
@@ -117,40 +151,6 @@ Certain search queries have special meaning:
 | `owner:me`            | Only show playlists I own              |
 | `owner:[owner]`       | Only show playlists owned by `[owner]` |
 
-## Development
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-In the project directory, first run `yarn install` to set up dependencies, then you can run:
-
-**`yarn start`**
-
-Runs the app in the development mode.\
-Open [http://127.0.0.1:3000](http://127.0.0.1:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-**`yarn test`**
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-**`yarn build`**
-
-Builds the app for production to the `build` folder.
-
-### Stack
-
-In addition to [Create React App](https://github.com/facebook/create-react-app), the application is built using the following tools/libraries:
-
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-- [Bootstrap 5](https://getbootstrap.com/) - styling and UI components
-- [Font Awesome 6](https://fontawesome.com/) - vector icon set and toolkit
-- [react-i18next](https://react.i18next.com/) - internationalization framework
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - light-weight solution for testing React DOM nodes
-- [MSW](https://mswjs.io/) - network-level request mocking (more of my own thoughts [here](https://watsonbox.github.io/posts/2020/11/30/discovering-msw.html))
-
 ## Notes
 
 - According to Spotify's [documentation](https://developer.spotify.com/web-api/working-with-playlists/):
@@ -173,7 +173,7 @@ To build and run Exportify with docker, run:
 
 **`docker run -p 3000:3000 exportify`**
 
-And then open [http://127.0.0.1:3000](http://127.0.0.1:3000) to view it in the browser.
+And then open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Contributing
 
