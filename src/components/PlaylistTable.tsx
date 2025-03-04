@@ -19,7 +19,7 @@ interface PlaylistTableProps extends WithTranslation {
 
 class PlaylistTable extends React.Component<PlaylistTableProps> {
   PAGE_SIZE = 20;
-
+  userDisplayName?: string;
   userId?: string;
   playlistsData?: PlaylistsData;
   configDropdown = React.createRef<ConfigDropdownRef>();
@@ -130,7 +130,7 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
                   min: min,
                   max: max,
                   total: this.state.playlistCount,
-                  userId: this.userId,
+                  userId: this.userDisplayName,
                 })
               }
             </Translation>
@@ -202,6 +202,7 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
       Bugsnag.setUser(user.id, user.uri, user.display_name);
 
       this.userId = user.id;
+      this.userDisplayName = user.display_name;
       this.playlistsData = new PlaylistsData(
         this.props.accessToken,
         this.userId!,
