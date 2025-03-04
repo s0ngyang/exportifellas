@@ -83,7 +83,6 @@
     }
 
     &.table-sm {
-
       td,
       th {
         padding: 8px;
@@ -145,7 +144,7 @@
 }
 
 .spinner:before {
-  content: 'Loading…';
+  content: "Loading…";
   position: absolute;
   top: 240px;
   left: 50%;
@@ -156,7 +155,7 @@
 }
 
 .spinner:not(:required):before {
-  content: '';
+  content: "";
   border-radius: 50%;
   border: 4px solid rgba(236, 235, 232, 1);
   border-top-color: rgba(130, 130, 130, 1);
@@ -165,7 +164,7 @@
 }
 
 .ribbon {
-  background-color: #84BD00;
+  background-color: #84bd00;
   overflow: hidden;
   white-space: nowrap;
   /* top left corner */
@@ -188,11 +187,21 @@
   border: 1px solid #ded;
   color: #fff;
   display: block;
-  font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: bold 81.25% "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 1px 0;
   padding: 10px 50px;
   text-align: center;
   text-decoration: none;
   /* shadow */
   text-shadow: 0 0 5px #444;
+}
+
+footer {
+  padding: 1rem 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: small;
 }
