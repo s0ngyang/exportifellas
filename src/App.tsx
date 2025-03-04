@@ -79,8 +79,8 @@ function App() {
           {subtitle}
         </p>
       </header>
-
       {view}
+      <footer>© 2025 Kee Song Yang - RH Unplugged Vice Head 23/24</footer>
     </div>
   );
 }
