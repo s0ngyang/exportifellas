@@ -78,6 +78,9 @@ function App() {
         <p id="subtitle" className="lead text-secondary">
           {subtitle}
         </p>
+        <p className="help">
+          Can't sign in? Drop a <a href="https://t.me/s0ngyang">message</a>
+        </p>
       </header>
       {view}
       <footer>© 2025 Kee Song Yang - RH Unplugged Vice Head 23/24</footer>
