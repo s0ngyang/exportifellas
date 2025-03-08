@@ -10,6 +10,9 @@ import PlaylistRow from "./PlaylistRow";
 import Paginator from "./Paginator";
 import PlaylistsExporter from "./PlaylistsExporter";
 import { apiCall, apiCallErrorHandler } from "helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import "./PlaylistTable.scss";
 
 interface PlaylistTableProps extends WithTranslation {
   accessToken: string;
@@ -281,7 +284,14 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
                       config={this.state.config}
                     />
                   </th>
-                  <th className="getsongs text-end">Get Songs</th>
+                  <th className="text-end">
+                    <FontAwesomeIcon
+                      title="Max 50 songs only!"
+                      id="getSongsIcon"
+                      icon={["fas", "circle-info"]}
+                    />
+                    Get Songs
+                  </th>
                 </tr>
               </thead>
               <tbody>
