@@ -80,7 +80,8 @@ function App() {
         </p>
         {!key.has("access_token") && (
           <p className="help">
-            Can't sign in? Drop a <a href="https://t.me/s0ngyang">message</a>
+            Only authorised users can login. If you require access, drop a{" "}
+            <a href="https://t.me/s0ngyang">message</a>.
           </p>
         )}
       </header>
