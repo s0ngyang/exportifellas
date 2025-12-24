@@ -4,8 +4,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 import { CLIENT_ID } from "./constants";
+import { setupServer } from "msw/node";
+import { handlers } from "mocks/handlers";
 
 const { location } = window;
+
+// Set up MSW server for mocking Spotify API and token exchange
+const server = setupServer(...handlers);
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: "warn" });
@@ -14,6 +19,7 @@ beforeAll(() => {
 });
 
 afterAll(() => {
+  server.close();
   window.location = location;
 });
 
@@ -95,6 +101,8 @@ describe("logging out", () => {
 
     await userEvent.click(changeUserElement);
 
-    expect(window.location.href).toBe("https://www.example.com/?change_user=true");
+    expect(window.location.href).toBe(
+      "https://www.example.com/?change_user=true"
+    );
   });
 });
