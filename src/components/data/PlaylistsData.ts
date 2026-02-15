@@ -98,7 +98,7 @@ class PlaylistsData {
       }
     }
 
-    const playlistsUrl = `https://api.spotify.com/v1/users/${this.userId}/playlists?offset=${start}&limit=${end - start}`
+    const playlistsUrl = `https://api.spotify.com/v1/me/playlists?offset=${start}&limit=${end - start}`
     const playlistsResponse = await apiCall(playlistsUrl, this.accessToken)
     const playlistsData = playlistsResponse.data
 

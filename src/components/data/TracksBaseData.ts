@@ -1,6 +1,6 @@
 import i18n from "../../i18n/config";
 import TracksData from "./TracksData";
-import { apiCall, migratePlaylistTracksUrl } from "helpers";
+import { apiCall } from "helpers";
 
 class TracksBaseData extends TracksData {
   playlist: any;
@@ -93,12 +93,10 @@ class TracksBaseData extends TracksData {
     }
 
     var requests = [];
-    var limit = this.playlist.tracks.limit ? 50 : 100;
+    var limit = this.playlist.items.limit ? 50 : 100;
 
-    for (var offset = 0; offset < this.playlist.tracks.total; offset = offset + limit) {
-      requests.push(
-        `${migratePlaylistTracksUrl(this.playlist.tracks.href.split("?")[0])}?offset=${offset}&limit=${limit}`,
-      );
+    for (var offset = 0; offset < this.playlist.items.total; offset = offset + limit) {
+      requests.push(`${this.playlist.items.href.split("?")[0]}?offset=${offset}&limit=${limit}`);
     }
 
     const trackPromises = requests.map((request) => {

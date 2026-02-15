@@ -22,11 +22,7 @@ class PlaylistRow extends React.Component<PlaylistRowProps> {
 
   exportPlaylist = () => {
     this.setState({ exporting: true }, () => {
-      new PlaylistExporter(
-        this.props.accessToken,
-        this.props.playlist,
-        this.props.config
-      )
+      new PlaylistExporter(this.props.accessToken, this.props.playlist, this.props.config)
         .export()
         .catch(apiCallErrorHandler)
         .then(() => {
@@ -39,21 +35,13 @@ class PlaylistRow extends React.Component<PlaylistRowProps> {
     if (condition) {
       return <FontAwesomeIcon icon={["far", "check-circle"]} size="sm" />;
     } else {
-      return (
-        <FontAwesomeIcon
-          icon={["far", "times-circle"]}
-          size="sm"
-          className="opacity-25"
-        />
-      );
+      return <FontAwesomeIcon icon={["far", "times-circle"]} size="sm" className="opacity-25" />;
     }
   }
 
   renderIcon(playlist: any) {
     if (playlist.name === "Liked") {
-      return (
-        <FontAwesomeIcon icon={["far", "heart"]} style={{ color: "red" }} />
-      );
+      return <FontAwesomeIcon icon={["far", "heart"]} style={{ color: "red" }} />;
     } else {
       return <FontAwesomeIcon icon={["fas", "music"]} />;
     }
@@ -61,17 +49,14 @@ class PlaylistRow extends React.Component<PlaylistRowProps> {
 
   render() {
     let playlist = this.props.playlist;
-    const icon: [IconPrefix, IconName] = [
-      "fas",
-      this.state.exporting ? "sync" : "download",
-    ];
+    const icon: [IconPrefix, IconName] = ["fas", this.state.exporting ? "sync" : "download"];
     const { showGetSongs } = this.state;
     const handleShowGetSongs = () => {
       this.setState({ showGetSongs: true });
     };
     const handleClose = () => this.setState({ showGetSongs: false });
 
-    if (playlist.uri == null)
+    if (playlist.uri == null || playlist.items == null)
       return (
         <tr key={this.props.key}>
           <td>{this.renderIcon(playlist)}</td>
@@ -79,12 +64,8 @@ class PlaylistRow extends React.Component<PlaylistRowProps> {
           <td className="d-none d-sm-table-cell" colSpan={2}>
             {this.props.i18n.t("playlist.not_supported")}
           </td>
-          <td className="d-none d-sm-table-cell">
-            {this.renderTickCross(playlist.public)}
-          </td>
-          <td className="d-none d-md-table-cell">
-            {this.renderTickCross(playlist.collaborative)}
-          </td>
+          <td className="d-none d-sm-table-cell">{this.renderTickCross(playlist.public)}</td>
+          <td className="d-none d-md-table-cell">{this.renderTickCross(playlist.collaborative)}</td>
           <td>&nbsp;</td>
         </tr>
       );
@@ -98,13 +79,9 @@ class PlaylistRow extends React.Component<PlaylistRowProps> {
         <td>
           <a href={playlist.owner.uri}>{playlist.owner.display_name}</a>
         </td>
-        <td className="d-none d-sm-table-cell">{playlist.tracks.total}</td>
-        <td className="d-none d-sm-table-cell">
-          {this.renderTickCross(playlist.public)}
-        </td>
-        <td className="d-none d-md-table-cell">
-          {this.renderTickCross(playlist.collaborative)}
-        </td>
+        <td className="d-none d-sm-table-cell">{playlist.items.total}</td>
+        <td className="d-none d-sm-table-cell">{this.renderTickCross(playlist.public)}</td>
+        <td className="d-none d-md-table-cell">{this.renderTickCross(playlist.collaborative)}</td>
         <td className="d-none d-sm-table-cell text-end">
           {/* @ts-ignore */}
           <Button
@@ -116,12 +93,7 @@ class PlaylistRow extends React.Component<PlaylistRowProps> {
             className="text-nowrap"
           >
             {/* @ts-ignore */}
-            <FontAwesomeIcon
-              icon={icon}
-              size="sm"
-              spin={this.state.exporting}
-            />{" "}
-            {this.props.i18n.t("playlist.export")}
+            <FontAwesomeIcon icon={icon} size="sm" spin={this.state.exporting} /> {this.props.i18n.t("playlist.export")}
           </Button>
         </td>
         <td className="text-end">
