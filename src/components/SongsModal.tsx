@@ -1,4 +1,4 @@
-import { apiCall } from "helpers";
+import { apiCall, migratePlaylistTracksUrl } from "helpers";
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Spinner, Toast, ToastContainer } from "react-bootstrap";
 
@@ -20,17 +20,22 @@ export const SongsModal = ({
   useEffect(() => {
     if (showGetSongs) {
       setLoading(true); // Reset loading state
-      apiCall(playlist.tracks.href + "?limit=50", accessToken).then(
-        (response) => {
-          const content = response.data.items.map((item: any) => {
-            return `• ${item.track.name} - ${item.track.artists
-              .map((a: any) => a.name)
-              .join(", ")}`;
+      const url = migratePlaylistTracksUrl(playlist.tracks.href);
+
+      apiCall(url + "?limit=50", accessToken).then((response) => {
+        let content = [];
+        if (url.includes("me")) {
+          content = response.data.items.map((item: any) => {
+            return `• ${item.track.name} - ${item.track.artists.map((a: any) => a.name).join(", ")}`;
           });
-          setSongs(content);
-          setLoading(false);
+        } else {
+          content = response.data.items.map(({ item }: { item: any }) => {
+            return `• ${item.name} - ${item.artists.map((a: any) => a.name).join(", ")}`;
+          });
         }
-      );
+        setSongs(content);
+        setLoading(false);
+      });
     }
   }, [showGetSongs, accessToken, playlist.tracks.href]);
 

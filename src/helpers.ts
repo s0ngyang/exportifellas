@@ -40,6 +40,12 @@ export const apiCall = limiter.wrap(function(url: string, accessToken: string) {
   return axios.get(url, { headers: { 'Authorization': 'Bearer ' + accessToken } })
 })
 
+// Migrate /playlists/{id}/tracks to /playlists/{id}/items per Spotify API deprecation.
+// Does NOT affect /me/tracks or other endpoints.
+export function migratePlaylistTracksUrl(url: string): string {
+  return url.replace(/\/playlists\/([^/]+)\/tracks/, '/playlists/$1/items')
+}
+
 export function apiCallErrorHandler(error: any) {
   if (error.isAxiosError) {
     if (error.request.status === 401) {

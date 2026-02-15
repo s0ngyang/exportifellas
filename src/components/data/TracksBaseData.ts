@@ -1,13 +1,13 @@
-import i18n from "../../i18n/config"
-import TracksData from "./TracksData"
-import { apiCall } from "helpers"
+import i18n from "../../i18n/config";
+import TracksData from "./TracksData";
+import { apiCall, migratePlaylistTracksUrl } from "helpers";
 
 class TracksBaseData extends TracksData {
-  playlist: any
+  playlist: any;
 
   constructor(accessToken: string, playlist: any) {
-    super(accessToken)
-    this.playlist = playlist
+    super(accessToken);
+    this.playlist = playlist;
   }
 
   dataLabels() {
@@ -28,66 +28,88 @@ class TracksBaseData extends TracksData {
       i18n.t("track.track_preview_url"),
       i18n.t("track.explicit"),
       i18n.t("track.popularity"),
-      i18n.t("track.isrc")
-    ]
+      i18n.t("track.isrc"),
+    ];
   }
 
   async trackItems() {
-    await this.getPlaylistItems()
+    await this.getPlaylistItems();
 
-    return this.playlistItems
+    return this.playlistItems;
   }
 
   async data() {
-    await this.getPlaylistItems()
+    await this.getPlaylistItems();
 
-    return new Map(this.playlistItems.map(item => {
-      return [
-        item.track.uri,
-        [
+    return new Map(
+      this.playlistItems.map((item) => {
+        return [
           item.track.uri,
-          item.track.name,
-          item.track.artists.map((a: any) => { return a.uri }).join(', '),
-          item.track.artists.map((a: any) => { return String(a.name).replace(/,/g, "\\,") }).join(', '),
-          item.track.album.uri == null ? '' : item.track.album.uri,
-          item.track.album.name,
-          item.track.album.artists.map((a: any) => { return a.uri }).join(', '),
-          item.track.album.artists.map((a: any) => { return String(a.name).replace(/,/g, "\\,") }).join(', '),
-          item.track.album.release_date == null ? '' : item.track.album.release_date,
-          item.track.album.images[0] == null ? '' : item.track.album.images[0].url,
-          item.track.disc_number,
-          item.track.track_number,
-          item.track.duration_ms,
-          item.track.preview_url == null ? '' : item.track.preview_url,
-          item.track.explicit,
-          item.track.popularity,
-          item.track.external_ids.isrc == null ? '' : item.track.external_ids.isrc
-        ]
-      ]
-    }))
+          [
+            item.track.uri,
+            item.track.name,
+            item.track.artists
+              .map((a: any) => {
+                return a.uri;
+              })
+              .join(", "),
+            item.track.artists
+              .map((a: any) => {
+                return String(a.name).replace(/,/g, "\\,");
+              })
+              .join(", "),
+            item.track.album.uri == null ? "" : item.track.album.uri,
+            item.track.album.name,
+            item.track.album.artists
+              .map((a: any) => {
+                return a.uri;
+              })
+              .join(", "),
+            item.track.album.artists
+              .map((a: any) => {
+                return String(a.name).replace(/,/g, "\\,");
+              })
+              .join(", "),
+            item.track.album.release_date == null ? "" : item.track.album.release_date,
+            item.track.album.images[0] == null ? "" : item.track.album.images[0].url,
+            item.track.disc_number,
+            item.track.track_number,
+            item.track.duration_ms,
+            item.track.preview_url == null ? "" : item.track.preview_url,
+            item.track.explicit,
+            item.track.popularity,
+            item.track.external_ids.isrc == null ? "" : item.track.external_ids.isrc,
+          ],
+        ];
+      }),
+    );
   }
 
   // Memoization supporting multiple calls
-  private playlistItems: any[] = []
+  private playlistItems: any[] = [];
   private async getPlaylistItems() {
     if (this.playlistItems.length > 0) {
-      return this.playlistItems
+      return this.playlistItems;
     }
 
-    var requests = []
-    var limit = this.playlist.tracks.limit ? 50 : 100
+    var requests = [];
+    var limit = this.playlist.tracks.limit ? 50 : 100;
 
     for (var offset = 0; offset < this.playlist.tracks.total; offset = offset + limit) {
-      requests.push(`${this.playlist.tracks.href.split('?')[0]}?offset=${offset}&limit=${limit}`)
+      requests.push(
+        `${migratePlaylistTracksUrl(this.playlist.tracks.href.split("?")[0])}?offset=${offset}&limit=${limit}`,
+      );
     }
 
-    const trackPromises = requests.map(request => { return apiCall(request, this.accessToken) })
-    const trackResponses = await Promise.all(trackPromises)
+    const trackPromises = requests.map((request) => {
+      return apiCall(request, this.accessToken);
+    });
+    const trackResponses = await Promise.all(trackPromises);
 
-    this.playlistItems = trackResponses.flatMap(response => {
-      return response.data.items.filter((i: any) => i.track) // Exclude null track attributes
-    })
+    this.playlistItems = trackResponses.flatMap((response) => {
+      return response.data.items.filter((i: any) => i.track); // Exclude null track attributes
+    });
   }
 }
 
-export default TracksBaseData
+export default TracksBaseData;
