@@ -4,11 +4,10 @@
 
 import axios from "axios";
 
-const SPOTIFY_CLIENT_ID = "311c88257b7f4d77a9dcd88f7c70342a";
+const SPOTIFY_CLIENT_ID = "66d0bababbf7489aa8f05e343f9aa7c2";
 const SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize";
 const SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token";
-const SPOTIFY_SCOPES =
-  "playlist-read-private playlist-read-collaborative user-library-read";
+const SPOTIFY_SCOPES = "playlist-read-private playlist-read-collaborative user-library-read";
 
 // Access token management
 export function loadAccessToken(): string | null {
@@ -26,8 +25,7 @@ export function clearAccessToken(): void {
 
 // Generate code verifier for PKCE flow
 function generateCodeVerifier(): string {
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const randomValues = crypto.getRandomValues(new Uint8Array(64));
   return Array.from(randomValues)
     .map((value) => possible[value % possible.length])
@@ -54,19 +52,11 @@ function base64urlencode(arrayBuffer: ArrayBuffer): string {
 
 // Get the redirect URI for the current location
 function getRedirectUri(): string {
-  return [
-    window.location.protocol,
-    "//",
-    window.location.host,
-    window.location.pathname,
-  ].join("");
+  return [window.location.protocol, "//", window.location.host, window.location.pathname].join("");
 }
 
 // Initiate Spotify OAuth authorization flow
-export async function initiateSpotifyAuth(options?: {
-  clientId?: string;
-  changeUser?: boolean;
-}): Promise<void> {
+export async function initiateSpotifyAuth(options?: { clientId?: string; changeUser?: boolean }): Promise<void> {
   const clientId = options?.clientId || SPOTIFY_CLIENT_ID;
   const changeUser = options?.changeUser || false;
 
@@ -115,7 +105,7 @@ export async function exchangeCodeForToken(code: string): Promise<string> {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-    }
+    },
   );
 
   const accessToken = response.data.access_token;
@@ -129,8 +119,6 @@ export async function exchangeCodeForToken(code: string): Promise<string> {
 // Logout and optionally redirect to change user
 export function logout(changeUser: boolean = false): void {
   clearAccessToken();
-  const url = changeUser
-    ? `${window.location.pathname}?change_user=true`
-    : window.location.pathname;
+  const url = changeUser ? `${window.location.pathname}?change_user=true` : window.location.pathname;
   window.location.href = url;
 }
