@@ -13,13 +13,9 @@ import { loadAccessToken, exchangeCodeForToken } from "auth";
 
 function App() {
   useTranslation();
-  const [subtitle, setSubtitle] = useState(
-    <Translation>{(t) => t("tagline")}</Translation>
-  );
+  const [subtitle, setSubtitle] = useState(<Translation>{(t) => t("tagline")}</Translation>);
   const searchParams = new URLSearchParams(window.location.search);
-  const [accessToken, setAccessToken] = useState<string | null>(
-    loadAccessToken()
-  );
+  const [accessToken, setAccessToken] = useState<string | null>(loadAccessToken());
   const hasProcessedCode = useRef(false);
 
   let view;
@@ -52,24 +48,15 @@ function App() {
     view = (
       <div id="spotifyErrorMessage" className="lead">
         <p>
-          <FontAwesomeIcon
-            icon={["fas", "bolt"]}
-            style={{ fontSize: "50px", marginBottom: "20px" }}
-          />
+          <FontAwesomeIcon icon={["fas", "bolt"]} style={{ fontSize: "50px", marginBottom: "20px" }} />
         </p>
         <p>
-          Oops, Exportify has encountered an unexpected error (5XX) while using
-          the Spotify API. This kind of error is due to a problem on Spotify's
-          side, and although it's rare, unfortunately all we can do is retry
-          later.
+          Oops, Exportify has encountered an unexpected error (5XX) while using the Spotify API. This kind of error is
+          due to a problem on Spotify's side, and although it's rare, unfortunately all we can do is retry later.
         </p>
         <p style={{ marginTop: "50px" }}>
           Keep an eye on the{" "}
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="https://status.spotify.dev/"
-          >
+          <a target="_blank" rel="noreferrer" href="https://status.spotify.dev/">
             Spotify Web API Status page
           </a>{" "}
           to see if there are any known problems right now, and then{" "}
@@ -81,9 +68,7 @@ function App() {
       </div>
     );
   } else if (accessToken) {
-    view = (
-      <PlaylistTable accessToken={accessToken!} onSetSubtitle={onSetSubtitle} />
-    );
+    view = <PlaylistTable accessToken={accessToken!} onSetSubtitle={onSetSubtitle} />;
   } else {
     view = <Login />;
   }
@@ -94,11 +79,7 @@ function App() {
         <div className="d-sm-none d-block mb-5" />
         <TopMenu loggedIn={!!accessToken} />
         <h1>
-          <FontAwesomeIcon
-            icon={["fab", "spotify"]}
-            color="#84BD00"
-            size="sm"
-          />{" "}
+          <FontAwesomeIcon icon={["fab", "spotify"]} color="#84BD00" size="sm" />{" "}
           <a href={process.env.PUBLIC_URL}>Exportifellas</a>
           <img
             src={`${process.env.PUBLIC_URL}/unp_logo.png`}
@@ -117,13 +98,12 @@ function App() {
         </p>
         {!accessToken && (
           <p className="help">
-            Only authorised users can login. If you require access, drop a{" "}
-            <a href="https://t.me/s0ngyang">message</a>.
+            Only authorised users can login. If you require access, drop a <a href="https://t.me/s0ngyang">message</a>.
           </p>
         )}
       </header>
       {view}
-      <footer>© 2025 Kee Song Yang - RH Unplugged Vice Head 23/24</footer>
+      <footer>© 2026 Kee Song Yang - RH Unplugged Vice Head 23/24</footer>
     </div>
   );
 }
